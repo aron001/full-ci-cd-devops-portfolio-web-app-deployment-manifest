@@ -1,0 +1,43 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-ingress
+  annotations:
+    cert-manager.io/issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  spec:
+  tls:
+  - hosts:
+    - fe.aronfinal.gebeyalearning.com
+    secretName: letsencrypt-prod
+  rules:
+  - host: fe.aronfinal.gebeyalearning.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-svc
+            port:
+              number: 80
+
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: frontend-ingress
+# spec:
+#   ingressClassName: nginx
+#   rules:
+#   - host: fe.aronfinal.gebeyalearning.com
+#     http:
+#       paths:
+#       - path: /
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: frontend-svc
+#             port:
+#               number: 80
